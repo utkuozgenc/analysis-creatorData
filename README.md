@@ -1,68 +1,70 @@
-# YouTube Video Engagement Analysis
+# Exams' Impact on My Sleep
 
-## Project Overview
-This project focuses on analyzing the performance of the YouTube videos I have created, specifically their engagement over time. By leveraging YouTube’s API, we will extract and analyze various video statistics such as views, watch time, audience retention, and engagement metrics. The goal is to understand the factors that influence viewer behavior, such as when they drop off or stay engaged throughout the video, and to identify patterns that can inform future video content creation.
+## Description
+This project aims to investigate the impact of exam dates on my sleep duration. The hypothesis is that exam dates lower my sleep duration. The project involves analyzing sleep data exported from Apple Health, covering the period from October 15, 2024, to November 17, 2024. The goal is to determine if sleep patterns change significantly around exam dates.
+
+## Table of Contents
+- [Motivation](#motivation)
+- [Tools](#tools)
+- [Data Source](#data-source)
+- [Data Processing](#data-processing)
+- [Data Visualizations](#data-visualizations)
+- [Data Analysis](#data-analysis)
+- [Findings](#findings)
+- [Limitations](#limitations)
+- [Future Work](#future-work)
 
 ## Motivation
-As a content creator on YouTube, it is important to understand how my videos perform over time, which sections of videos retain viewers, and where people tend to lose interest. With this data, I can make data-driven decisions to improve my content, increase viewer engagement, and better target my audience. The insights from this analysis can help in:
-- Tailoring video content to enhance viewer retention.
-- Understanding the optimal video length and structure.
-- Identifying trends that correlate with increased or decreased viewer interaction.
+My motivation for this project stems from curiosity about the potential negative effects of academic stress on sleep duration, particularly during exam periods. Understanding the relationship between exams and sleep can help assess the impact of stress on health and performance.
+
+## Tools
+- **Python**
+- **pandas:** Data cleaning and manipulation
+- **matplotlib:** Data visualization
+- **seaborn:** Advanced data visualization
+- **numpy:** Mathematical operations
 
 ## Data Source
-The data for this project is collected using:
-1. **YouTube Data API v3**: Provides access to public video statistics such as views, likes, comments, and more.
-2. **YouTube Analytics API**: Offers in-depth statistics on video performance, including audience retention and demographics.
-3. **YouTube Studio**: An intuitive platform for tracking video performance metrics, such as:
-   - Views, likes, comments, and watch time.
-   - Audience retention data showing viewer drop-off points.
-   - Traffic sources, demographics, and real-time data.
+The data was exported from Apple Health using the `export.xml` format. Sleep duration data is calculated by subtracting the start time from the end time for each recorded sleep session.
 
-### Authentication
-Authentication for both APIs is performed using **OAuth2.0 credentials**, ensuring secure access to private channel data.
+## Data Processing
+The data was filtered to include the time period from October 15, 2024, to November 17, 2024. Sleep durations were calculated from the difference between start and end timestamps. Exam dates were included as a separate column for comparative analysis.
 
-## Dataset Description
-The dataset includes the following types of data for each video:
-- **Video ID**: Unique identifier for each video.
-- **Views**: Total number of views.
-- **Audience**: How many people watched the video over time.
-- **Likes**: Number of likes received.
-- **Comments**: Number of comments on the video.
-- **Audience Retention**: Breakdown showing where viewers drop off in the video.
-- **Watch Time**: Total time spent watching the video.
-- **Engagement Metrics**: User interactions such as shares, likes, and comments.
+### Data Processing Steps
+The data processing steps included in the code are as follows:
 
-## Data Analysis Techniques
+- **Loading Data:** The sleep data was imported from a preprocessed CSV file (`sleep_data_prepared.csv`).
+- **Date Conversion:** The `date` column was converted to a `datetime` object for easier date filtering and visualization.
+- **Date Filtering:** The data was filtered to only include sleep records between October 15, 2024, and November 17, 2024.
+- **Exam Dates Identification:** A list of specific exam dates was created, and a new column `is_exam` was added to label each day as either an exam or non-exam day.
+- **Rolling Averages:** A rolling average column (`rolling_avg`) was calculated with a 5-day window to smooth the sleep data trends.
+- **Difference from Mean Calculation:** The difference between each sleep duration and the mean sleep duration was calculated and stored in the `difference_from_mean` column.
 
-### 1. Data Collection
-- **API Integration**: Use the YouTube Data API v3 for public video data and the YouTube Analytics API for granular engagement details.
+## Data Visualizations
+The project involves multiple visualization techniques to test the hypothesis:
+- Line plots showing daily sleep duration with exam dates highlighted
+- Bar plots comparing average sleep duration on exam and non-exam days
+- Boxplots comparing the distribution of sleep durations
+- Histograms displaying the distribution of sleep durations with KDE overlays
+- Rolling average sleep duration trends
+- Violin plots comparing the distribution of sleep durations on exam vs non-exam days
+- Sleep duration difference from the mean visualized to observe deviations
 
-### 2. Data Preprocessing
-- **Cleaning and Structuring**: Remove irrelevant information and format the data for analysis.
-- **Normalization**: Standardize metrics (e.g., views and likes) for better cross-video comparisons.
+## Data Analysis
+The data analysis involves:
+- Examining sleep trends leading up to and following exam dates
+- Comparing sleep durations on exam and non-exam days
+- Visualizing deviations from average sleep duration
 
-### 3. Exploratory Data Analysis (EDA)
-- **Trend Analysis**: Visualize video performance metrics (views, likes, watch time) over time.
-- **Engagement Patterns**: Analyze where viewers drop off in videos using audience retention data.
+## Findings
+Preliminary results suggest a noticeable reduction in sleep durations on exam dates compared to non-exam days. Further statistical testing will be conducted to verify these observations.
 
-### 4. Data Visualization
-- **Time Series Plots**: Track changes in views and engagement over time.
-- **Heatmaps**: Visualize audience retention and viewer drop-off points.
-- **Scatter Plots**: Examine correlations between metrics like watch time and views.
+## Limitations
+- The dataset is limited to a short time period.
+- External factors affecting sleep (e.g., health, personal habits) are not accounted for.
+- Data is self-reported and may lack accuracy.
 
-## Project Plan
-### Phase 1: Data Collection
-- Set up API credentials and integrate the YouTube Data API and Analytics API.
-- Retrieve video statistics and audience retention data.
-
-### Phase 2: Data Preprocessing
-- Clean and structure the collected data.
-- Normalize and prepare the dataset for analysis.
-
-### Phase 3: Exploratory Data Analysis (EDA)
-- Conduct preliminary analysis to identify trends and key metrics.
-- Visualize video performance over time.
-
-### Phase 4: Reporting and Visualization
-- Create a final report summarizing findings, trends, and recommendations.
-- Visualize insights through charts and graphs.
+## Future Work
+- Expanding the dataset to cover a more extended period
+- Conducting statistical significance tests to confirm findings
+- Exploring additional health metrics such as heart rate and activity levels for a more comprehensive analysis
